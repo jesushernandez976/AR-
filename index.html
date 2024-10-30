@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Hello, WebVR! • A-Frame</title>
+    <title>[ACP] AUGMENTED REALITY--</title>
     <meta name="description" content="Hello, WebVR! • A-Frame" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
@@ -14,11 +14,11 @@
 
         .button-18 {
             position: fixed;
-            right: 20px;
-            bottom: 20px;
+            right: 15px;
+            bottom: 15px;
             align-items: center;
-            background-color: #0A66C2;
-            border: 0;
+            background-color: transparent;
+            border: 2px solid;
             border-radius: 100px;
             box-sizing: border-box;
             color: #ffffff;
@@ -28,7 +28,7 @@
             font-size: 16px;
             font-weight: 600;
             justify-content: center;
-            line-height: 20px;
+            line-height: 0px;
             min-height: 40px;
             padding: 0 20px;
             text-align: center;
@@ -38,7 +38,7 @@
 
         .button-18:hover,
         .button-18:focus {
-            background-color: #16437E;
+            background-color: #bd6a17;
             color: #ffffff;
         }
 
@@ -55,6 +55,19 @@
 
         .a-enter-vr-button {
             display: none;
+        }
+
+        
+
+        p {
+          left: 15px;
+          right: 15px;
+          bottom: 0px;
+          position: fixed;
+          z-index: 99999;
+          color: white;
+          font-size: 10px;
+
         }
     </style>
 </head>
@@ -76,6 +89,9 @@
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
+
+    <p class="tag">Access Code Programming, LLC<br>Augmented Reality--[Version 1.4.0] <br>
+      © 2025 [ACP]  All Rights Reserved.</p>
 
     <script>
         // Array of model URLs
