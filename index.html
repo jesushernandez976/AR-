@@ -41,21 +41,6 @@
       // Change the model link every 5 seconds (5000 milliseconds)
       setInterval(changeModel, 6000);
 
-      const model = document.getElementById('model');
-      let lastPosition = { x: 0, y: 0, z: 0 };
-
-      function smoothPosition() {
-          const currentPosition = model.object3D.position;
-          // Apply smoothing factor (0.8 - 0.95 is typical)
-          currentPosition.x = lastPosition.x * 0.8 + currentPosition.x * 0.2;
-          currentPosition.y = lastPosition.y * 0.8 + currentPosition.y * 0.2;
-          currentPosition.z = lastPosition.z * 0.8 + currentPosition.z * 0.2;
-
-          lastPosition = { ...currentPosition };
-          requestAnimationFrame(smoothPosition);
-      }
-
-      smoothPosition();
     </script>
   </body>
 </html>
