@@ -81,7 +81,7 @@
         <a-marker type='pattern' url='https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/pattern-AR%20MARKER.patt?v=1730360025912' size="3">
         <a-entity
                 id="model"
-                position="0 -7 0"
+                position="0 -7 -1"
                 scale="0.10 0.10 0.10"
                 gltf-model="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221"
                 material="shader: flat; opacity: 1;"
@@ -115,17 +115,17 @@
         const model = document.getElementById('model');
 
         marker.addEventListener('markerFound', () => {
-            // Reset to starting position and scale when the marker is found
-            model.setAttribute('position', '0 -12 0');
+            // Reset to initial position and scale when the marker is found
+            model.setAttribute('position', '0 -7 -1');
             model.setAttribute('scale', '0.10 0.10 0.10');
         });
 
         marker.addEventListener('markerLost', () => {
             // Hide or move the model out of view when the marker is lost
-            model.setAttribute('position', '0 -20 0'); // Moves the model below the visible area
+            model.setAttribute('position', '0 -20 -1'); // Moves the model out of visible area
         });
 
-        // Adjust scale dynamically based on proximity
+        // Optional: Adjust scale dynamically based on proximity
         marker.addEventListener('transformUpdated', (e) => {
             const distance = e.detail.matrix.elements[14]; // Z-position from marker
             if (distance < -1) {
@@ -134,7 +134,6 @@
                 model.setAttribute('scale', '0.10 0.10 0.10');
             }
         });
-
     </script>
 </body>
 </html>
