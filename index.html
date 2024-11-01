@@ -179,114 +179,80 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
 
     </style>
 </head>
-<body>
-  <a href="https://accesscodepro.com/" class="animated-button1">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+<a href="https://accesscodepro.com/" class="animated-button1">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</a>
+<div class="logo-container">
+  <a href="https://accesscodepro.com/" class="logo">
+      <img src="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/Access%20%20AR%20LOGO%2002-05.png?v=1730420098269" alt="Access code logo" class="shiny-image">
   </a>
-    <div class="logo-container">
-    <a href="https://accesscodepro.com/" class="logo">
-        <img src="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/Access%20%20AR%20LOGO%2002-05.png?v=1730420098269" alt="Access code logo" class="shiny-image">
-    </a>
 </div>
-    </div>
-    <p class="tag"><br/>
-      © 2025 [ACP]  All Rights Reserved.</p>
+<p class="tag"><br/>
+  © 2025 [ACP]  All Rights Reserved.
+</p>
 
-    <a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam; disableDefaultUI: true; trackingMethod: best; smooth: true; smoothCount: 10; smoothTolerance: 0.01; smoothThreshold: 5;"antialias="true">
-      <a-light type="ambient" intensity="1" color="#ffffff"></a-light>
-      <a-light type="directional" intensity="1" color="#ffffff" position="1 1 1"></a-light>      
-        <a-marker type='pattern' url='https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/pattern-AR%20MARKER.patt?v=1730360025912' size="3">
-        <a-entity
-                id="model"
-                position="0 -7 0"
-                scale="0.10 0.10 0.10"
-                gltf-model="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221"
-                material="shader: flat; opacity: 1;"
-                animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear">
-            </a-entity>
-          </a-marker>       
-           <a-entity camera></a-entity>
-    </a-scene>
+<a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam; disableDefaultUI: true; trackingMethod: best; smooth: true; smoothCount: 10; smoothTolerance: 0.01; smoothThreshold: 5;" antialias="true">
+  <a-light type="ambient" intensity="1" color="#ffffff"></a-light>
+  <a-light type="directional" intensity="1" color="#ffffff" position="1 1 1"></a-light>
+  <a-marker id="marker" type='pattern' url='https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/pattern-AR%20MARKER.patt?v=1730360025912' size="3">
+      <a-entity
+          id="model"
+          position="0 -7 0"
+          scale="0.10 0.10 0.10"
+          gltf-model="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221"
+          material="shader: flat; opacity: 1;"
+          animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear">
+      </a-entity>
+  </a-marker>
+  <a-entity camera></a-entity>
+</a-scene>
 
-    <script>
+<script>
+  let initialized = false;
+  const modelEntity = document.getElementById('model');
+  const marker = document.getElementById('marker');
 
-      // alert("Welcome to Augmented Reality®--Please allow app to access your camera for accurate rendering.");
+  // Array of model URLs
+  const modelUrls = [
+      "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
+      "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupwhite.glb?v=1730250247042",
+      "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblue.glb?v=1730249574324"
+  ];
 
-      let initialized = false;
+  let currentModelIndex = 0;
 
-      marker.addEventListener('markerFound', () => {
-        if (!initialized) {
-          // Initialize your AR content here only once
+  // Function to change the model link
+  function changeModel() {
+      currentModelIndex = (currentModelIndex + 1) % modelUrls.length; // Cycle through models
+      modelEntity.setAttribute('gltf-model', modelUrls[currentModelIndex]);
+  }
+
+  // Change the model link every 5 seconds (5000 milliseconds)
+  setInterval(changeModel, 5000);
+
+  marker.addEventListener('markerFound', () => {
+      if (!initialized) {
+          // Initialize AR content here only once
           console.log("Marker found, initializing AR content.");
           initialized = true;
-        }
-      });
+          modelEntity.setAttribute('position', '0 -7 0');
+          modelEntity.setAttribute('scale', '0.10 0.10 0.10');
+      }
+  });
 
-marker.addEventListener('markerLost', () => {
-  console.log("Marker lost, keeping AR content intact.");
-  // Do not reload or reinitialize on marker loss
-});
+  marker.addEventListener('markerLost', () => {
+      console.log("Marker lost, keeping AR content intact.");
+      modelEntity.setAttribute('position', '0 -20 -2');
+  });
 
-      window.addEventListener('resize', (event) => {
-          event.preventDefault();
-          console.log("Preventing reload on resize");
-        });
-
-      window.addEventListener('orientationchange', (event) => {
-          event.preventDefault();
-          console.log("Preventing reload on orientation change");
-        });
-        // Array of model URLs
-        const modelUrls = [
-            "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
-            "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupwhite.glb?v=1730250247042",
-            "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblue.glb?v=1730249574324"
-        ];
-
-        let currentModelIndex = 0;
-
-        // Function to change the model link
-        function changeModel() {
-            const modelEntity = document.getElementById('model');
-            currentModelIndex = (currentModelIndex + 1) % modelUrls.length; // Cycle through models
-            modelEntity.setAttribute('gltf-model', modelUrls[currentModelIndex]);
-        }
-
-        // Change the model link every 5 seconds (5000 milliseconds)
-        setInterval(changeModel, 5000);
-
-        const marker = document.getElementById('marker');
-        const model = document.getElementById('model');
-
-        marker.addEventListener('markerFound', () => {
-            model.setAttribute('position', '0 -7 0');
-            model.setAttribute('scale', '0.10 0.10 0.10');
-        });
-
-        marker.addEventListener('markerLost', () => {
-            model.setAttribute('position', '0 -20 -2');
-        });
-
-        marker.addEventListener('transformUpdated', (e) => {
-            const distance = Math.abs(e.detail.matrix.elements[14]);
-
-            const positionFactor = -distance * 0.5; // Adjusts depth based on distance
-        modelEntity.setAttribute('position', `0 ${positionFactor} ${positionFactor}`);
-
-        // Adjust scale based on distance
-        let scaleFactor;
-        if (distance > 1) {
-            scaleFactor = 0.10 + (distance * 0.05); // Scales up with distance
-        } else {
-            scaleFactor = 0.10; // Default scale when close
-        }
-        
-        modelEntity.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
-    });
-
+  marker.addEventListener('transformUpdated', (e) => {
+      const distance = Math.abs(e.detail.matrix.elements[14]);
+      let scaleFactor = distance > 1 ? 0.10 + (distance / 20) : 0.10;
+      modelEntity.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
+  });
     </script>
 </body>
 </html>
