@@ -273,15 +273,20 @@ marker.addEventListener('markerLost', () => {
         marker.addEventListener('transformUpdated', (e) => {
             const distance = Math.abs(e.detail.matrix.elements[14]);
 
-            let scaleFactor;
-            if (distance > 1) {
-                scaleFactor = 0.10 + (distance / 20);
-            } else {
-                scaleFactor = 0.10;
-            }
-            
-            model.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
-        });
+            const positionFactor = -distance * 0.5; // Adjusts depth based on distance
+        modelEntity.setAttribute('position', `0 ${positionFactor} ${positionFactor}`);
+
+        // Adjust scale based on distance
+        let scaleFactor;
+        if (distance > 1) {
+            scaleFactor = 0.10 + (distance * 0.05); // Scales up with distance
+        } else {
+            scaleFactor = 0.10; // Default scale when close
+        }
+        
+        modelEntity.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
+    });
+
     </script>
 </body>
 </html>
