@@ -55,8 +55,6 @@
   text-decoration: none;
   -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-
-  cursor: pointer;
   position: fixed;
   right: 0px;
   left: 0px;
@@ -180,7 +178,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
     </style>
 </head>
 <body>
-  <a href="#" class="animated-button1">
+  <a href="https://accesscodepro.com/" class="animated-button1">
     <span></span>
     <span></span>
     <span></span>
@@ -191,7 +189,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
       <img src="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/Access%20%20AR%20LOGO%2002-05.png?v=1730420098269" alt="Access code logo" class="shiny-image">
     </div>
     </div>
-    <p class="tag">
+    <p class="tag"><br/>
       © 2025 [ACP]  All Rights Reserved.</p>
 
     <a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam; disableDefaultUI: true; trackingMethod: best; smooth: true; smoothCount: 10; smoothTolerance: 0.01; smoothThreshold: 5;"antialias="true">
@@ -213,6 +211,31 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
     <script>
 
       alert("Welcome to Augmented Reality®--Please allow app to access your camera for accurate rendering.");
+
+      let initialized = false;
+
+      marker.addEventListener('markerFound', () => {
+        if (!initialized) {
+          // Initialize your AR content here only once
+          console.log("Marker found, initializing AR content.");
+          initialized = true;
+        }
+      });
+
+marker.addEventListener('markerLost', () => {
+  console.log("Marker lost, keeping AR content intact.");
+  // Do not reload or reinitialize on marker loss
+});
+
+      window.addEventListener('resize', (event) => {
+          event.preventDefault();
+          console.log("Preventing reload on resize");
+        });
+
+      window.addEventListener('orientationchange', (event) => {
+          event.preventDefault();
+          console.log("Preventing reload on orientation change");
+        });
         // Array of model URLs
         const modelUrls = [
             "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
