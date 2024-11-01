@@ -40,21 +40,6 @@
   cursor: pointer;
 }
 
-.swap-button {
-            position: fixed;
-            left: 50%;
-            bottom: 50px;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: #4476b0;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 9999;
-        }
-
-
 
 .animated-button1 {
   background: linear-gradient(-30deg, rgba(14, 53, 80, 0.2) 50%, rgba(8, 26, 43, 0.3) 50%);
@@ -195,7 +180,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
     </style>
 </head>
 <body>
-  <a  class="animated-button1">
+  <a href="https://accesscodepro.com/" class="animated-button1">
     <span></span>
     <span></span>
     <span></span>
@@ -209,8 +194,6 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
     </div>
     <p class="tag"><br/>
       © 2025 [ACP]  All Rights Reserved.</p>
-
-      <button id="swapButton" class="swap-button">Swap Model</button>  
 
     <a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam; disableDefaultUI: true; trackingMethod: best; smooth: true; smoothCount: 10; smoothTolerance: 0.01; smoothThreshold: 5;"antialias="true">
       <a-light type="ambient" intensity="1" color="#ffffff"></a-light>
@@ -232,24 +215,51 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
 
       // alert("Welcome to Augmented Reality®--Please allow app to access your camera for accurate rendering.");
 
-      let modelUrls = [
-            "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
-            "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupwhite.glb?v=1730250247042",
-            "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblue.glb?v=1730249574324"
-        ];
+      let initialized = false;
 
-        let currentModelIndex = 0;
 
-        const model = document.getElementById('model');
-        const swapButton = document.getElementById('swapButton');
+const models = [
+    "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
+    "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupwhite.glb?v=1730250247042",
+    "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblue.glb?v=1730249574324"
+];
 
-        swapButton.addEventListener('click', () => {
-            currentModelIndex = (currentModelIndex + 1) % modelUrls.length; // Cycle through the models
-            model.setAttribute('gltf-model', modelUrls[currentModelIndex]); // Update model URL
-        });
+let currentModelIndex = 0;
 
-        // Marker initialization
-        var marker = document.querySelector('a-marker');
+function swapModel() {
+    currentModelIndex = (currentModelIndex + 1) % models.length;
+    model.setAttribute('gltf-model', models[currentModelIndex]);
+}
+
+// Swap model on click
+model.addEventListener('click', swapModel);
+
+// Marker event listeners
+
+marker.addEventListener('markerFound', () => {
+    if (!initialized) {
+        console.log("Marker found, initializing AR content.");
+        initialized = true;
+    }
+});
+
+marker.addEventListener('markerLost', () => {
+    console.log("Marker lost, keeping AR content intact.");
+});
+
+window.addEventListener('resize', (event) => {
+    event.preventDefault();
+    console.log("Preventing reload on resize");
+});
+
+window.addEventListener('orientationchange', (event) => {
+    event.preventDefault();
+    console.log("Preventing reload on orientation change");
+});
+    
+
+        var marker = document.getElementById('marker');
+        var model = document.getElementById('model');
 
         marker.addEventListener('markerFound', () => {
             model.setAttribute('position', '0 -7 0');
@@ -272,6 +282,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
             
             model.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
         });
+
     </script>
 </body>
 </html>
