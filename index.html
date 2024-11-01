@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>[ACP] AUGMENTED REALITY--1</title>
-    <meta name="description" content="Hello, WebVR! • A-Frame" />
+    <title>[ACP] AUGMENTED REALITY--</title>
+    <meta name="" content="" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <style>
@@ -12,67 +12,186 @@
             overflow: hidden;
         }
 
-        .button-18 {
-            position: fixed;
-            right: 15px;
-            bottom: 15px;
-            align-items: center;
-            background-color: transparent;
-            border: 2px solid;
-            border-radius: 100px;
-            box-sizing: border-box;
-            color: #ffffff;
-            cursor: pointer;
-            display: inline-flex;
-            font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            justify-content: center;
-            line-height: 0px;
-            min-height: 40px;
-            padding: 0 20px;
-            text-align: center;
-            transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
-        }
-
-        .button-18:hover,
-        .button-18:focus {
-            background-color: #bd6a17;
-            color: #ffffff;
-        }
-
-        .button-18:active {
-            background: #09223b;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .button-18:disabled {
-            cursor: not-allowed;
-            background: rgba(0, 0, 0, 0.08);
-            color: rgba(0, 0, 0, 0.3);
-        }
-
         .a-enter-vr-button {
             display: none;
         }
 
         p {
-          left: 15px;
-          right: 15px;
+          left: 29px;
           bottom: 0px;
           position: fixed;
-          z-index: 99999;
+          z-index: 9999;
           color: white;
-          font-size: 8px;
+          font-size: 5px;
 
         }
+
+        .shiny-image {
+          width: 120px;
+          bottom: 18px;
+          left: 8px;
+          position: fixed;
+          z-index: 1;
+
+
+        }
+
+
+
+
+.animated-button1 {
+  background: linear-gradient(-30deg, rgba(14, 53, 80, 0.0) 50%, rgba(8, 26, 43, 0.4) 50%);
+  padding: 20px 40px;
+  margin: 0px;
+  display: inline-block;
+  -webkit-transform: translate(0%, 0%);
+          transform: translate(0%, 0%);
+  overflow: hidden;
+  color: #f7d4d4;
+  font-size: 20px;
+  letter-spacing: 2.5px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+
+  cursor: pointer;
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  height: 10px;
+  z-index: 1;
+}
+
+.animated-button1::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #ad8585;
+  opacity: 0;
+  -webkit-transition: .2s opacity ease-in-out;
+  transition: .2s opacity ease-in-out;
+}
+
+.animated-button1:hover::before {
+  opacity: 0.2;
+}
+
+.animated-button1 span {
+  position: absolute;
+}
+
+.animated-button1 span:nth-child(1) {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: -webkit-gradient(linear, right top, left top, from(rgba(43, 8, 8, 0)), to(#d92626));
+  background: linear-gradient(to left, rgba(43, 8, 8, 0), #269dd9);
+  -webkit-animation: 2s animateTop linear infinite;
+          animation: 2s animateTop linear infinite;
+}
+
+@keyframes animateTop {
+  0% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+}
+
+.animated-button1 span:nth-child(2) {
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 2px;
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(43, 8, 8, 0)), to(#d92626));
+  background: linear-gradient(to top, rgba(43, 8, 8, 0), #269ad9);
+  -webkit-animation: 2s animateRight linear -1s infinite;
+          animation: 2s animateRight linear -1s infinite;
+}
+
+@keyframes animateRight {
+  0% {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  100% {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+}
+
+.animated-button1 span:nth-child(3) {
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(43, 8, 8, 0)), to(#d92626));
+  background: linear-gradient(to right, rgba(43, 8, 8, 0), #269ad9);
+  -webkit-animation: 2s animateBottom linear infinite;
+          animation: 2s animateBottom linear infinite;
+}
+
+@keyframes animateBottom {
+  0% {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
+
+.animated-button1 span:nth-child(4) {
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 2px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(43, 8, 8, 0.2)), to(rgba(18, 154, 217, 0.8)));
+background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0.8));
+
+  -webkit-animation: 2s animateLeft linear -1s infinite;
+          animation: 2s animateLeft linear -1s infinite;
+}
+
+@keyframes animateLeft {
+  0% {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  100% {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+}
+
+
+
     </style>
 </head>
 <body>
-    <button class="button-18" role="button" onclick="https://accesscodepro.com/shop.html";>Visit Shop</button>
-
-    <p class="tag">Access Code Programming, LLC<br>Augmented Reality--[Version 1.4.34] <br>
+  <a href="#" class="animated-button1">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </a>
+    <div class="logos">
+      <div class="logos-slide">
+      <img src="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/Access%20%20AR%20LOGO%2002-05.png?v=1730420098269" alt="Access code logo" class="shiny-image">
+    </div>
+    </div>
+    <p class="tag">
       © 2025 [ACP]  All Rights Reserved.</p>
 
     <a-scene embedded arjs="detectionMode: mono; trackingMethod: best; smooth: true; smoothCount: 10; smoothTolerance: 0.01; smoothThreshold: 5;"antialias="true">
@@ -93,7 +212,7 @@
 
     <script>
 
-      alert("Please allow Augmented Reality App to access your camera to render correctly.");
+      alert("Welcome to Augmented Reality®--Please allow app to access your camera for accurate rendering.");
         // Array of model URLs
         const modelUrls = [
             "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
