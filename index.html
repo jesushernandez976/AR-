@@ -330,7 +330,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
         });
 
         marker.addEventListener('transformUpdated', (e) => {
-            const distance = Math.abs(e.detail.matrix.elements[14]);
+            const distance = Math.abs(e.detail.matrix.elements[20]);
             let scaleFactor = distance > 1 ? 0.10 + (distance / 20) : 0.10;
             const currentScale = model.getAttribute('scale');
             if (Math.abs(currentScale.x - scaleFactor) > 0.01) { // Small threshold to avoid unnecessary updates
