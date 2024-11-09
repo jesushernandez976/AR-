@@ -262,25 +262,39 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
       if (!modelEntity) {
         console.error("Model element not found!");
       }
-
+      let isProcessing = false;
       // Ensure the right and left arrow divs are present
       if (rightDiv && leftDiv) {
         // Right arrow click
         rightDiv.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default action (reload)
-        console.log("Right arrow clicked");
-        currentIndex = (currentIndex + 1) % models.length; // Move to next model
-        console.log("Current model index: " + currentIndex); // Log index for debugging
-        modelEntity.setAttribute('gltf-model', models[currentIndex]);
-      });
+          event.preventDefault(); // Prevent default action (reload)
+          if (isProcessing) return; // Skip if already processing
+          isProcessing = true;
+
+          console.log("Right arrow clicked");
+          currentIndex = (currentIndex + 1) % models.length; // Move to next model
+          modelEntity.setAttribute('gltf-model', models[currentIndex]);
+
+          // Allow further clicks after a short delay
+          setTimeout(() => {
+            isProcessing = false;
+          }, 500); // Adjust the delay as necessary
+        });
 
         // Left arrow click
-        leftDiv.addEventListener('click', () => {
+        leftDiv.addEventListener('click', (event) => {
           event.preventDefault(); // Prevent default action (reload)
+          if (isProcessing) return; // Skip if already processing
+          isProcessing = true;
+
           console.log("Left arrow clicked");
           currentIndex = (currentIndex - 1 + models.length) % models.length; // Move to previous model
-          console.log("Current model index: " + currentIndex); // Log index for debugging
           modelEntity.setAttribute('gltf-model', models[currentIndex]);
+
+          // Allow further clicks after a short delay
+          setTimeout(() => {
+            isProcessing = false;
+          }, 500); // Adjust the delay as necessary
         });
       } else {
         console.error("Left or Right div element not found!");
