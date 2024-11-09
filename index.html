@@ -304,19 +304,6 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
   }
 
       // Example of removing event listeners before adding new ones
-      function removePreviousListeners() {
-        rightDiv.removeEventListener('click', handleRightClick);
-        leftDiv.removeEventListener('click', handleLeftClick);
-      }
-
-      function handleRightClick(event) {
-        // Handle right arrow click
-      }
-
-      function handleLeftClick(event) {
-        // Handle left arrow click
-      }
-
       modelEntity.setAttribute('gltf-model', '');  // Clear the current model when it's not needed anymore
       modelEntity = null;
 
