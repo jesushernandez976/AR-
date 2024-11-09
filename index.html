@@ -262,6 +262,16 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
       if (!modelEntity) {
         console.error("Model element not found!");
       }
+
+      const swapModel = (direction) => {
+        // Update the current model index
+        currentIndex = (currentIndex + direction + models.length) % models.length;
+
+        // Only change the model URL if it's a new model
+        modelEntity.setAttribute('gltf-model', models[currentIndex]);
+        console.log("Model changed to: ", models[currentIndex]);
+      };
+
       let isProcessing = false;
       // Ensure the right and left arrow divs are present
       if (rightDiv && leftDiv) {
@@ -272,9 +282,10 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
       if (isProcessing) return; // Skip if already processing
       isProcessing = true;
 
+
       console.log("Right arrow clicked");
-      currentIndex = (currentIndex + 1) % models.length; // Move to next model
-      modelEntity.setAttribute('gltf-model', models[currentIndex]);
+       console.log("Right arrow clicked");
+          swapModel(1); // Move to the next model
 
       // Allow further clicks after a short delay
       setTimeout(() => {
@@ -290,8 +301,8 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
       isProcessing = true;
 
       console.log("Left arrow clicked");
-      currentIndex = (currentIndex - 1 + models.length) % models.length; // Move to previous model
-      modelEntity.setAttribute('gltf-model', models[currentIndex]);
+      console.log("Left arrow clicked");
+          swapModel(-1); // Move to the previous model
 
       // Allow further clicks after a short delay
       setTimeout(() => {
