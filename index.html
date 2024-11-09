@@ -300,6 +300,16 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
         // Handle left arrow click
       }
 
+      // Hide the current model before switching
+      modelEntity.setAttribute('visible', false);
+
+      // Switch model
+      currentIndex = (currentIndex + 1) % models.length;
+      modelEntity.setAttribute('gltf-model', models[currentIndex]);
+
+      // Show the new model
+      modelEntity.setAttribute('visible', true);
+
       // Add the event listeners after removing the previous ones
       removePreviousListeners();
       rightDiv.addEventListener('click', handleRightClick);
