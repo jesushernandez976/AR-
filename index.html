@@ -265,40 +265,42 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
       let isProcessing = false;
       // Ensure the right and left arrow divs are present
       if (rightDiv && leftDiv) {
-        // Right arrow click
-        rightDiv.addEventListener('click', (event) => {
-          event.preventDefault(); // Prevent default action (reload)
-          if (isProcessing) return; // Skip if already processing
-          isProcessing = true;
+    // Right arrow click
+    rightDiv.addEventListener('click', (event) => {
+      event.preventDefault(); // Prevent default action (reload)
+      event.stopImmediatePropagation(); // Stop event from propagating further
+      if (isProcessing) return; // Skip if already processing
+      isProcessing = true;
 
-          console.log("Right arrow clicked");
-          currentIndex = (currentIndex + 1) % models.length; // Move to next model
-          modelEntity.setAttribute('gltf-model', models[currentIndex]);
+      console.log("Right arrow clicked");
+      currentIndex = (currentIndex + 1) % models.length; // Move to next model
+      modelEntity.setAttribute('gltf-model', models[currentIndex]);
 
-          // Allow further clicks after a short delay
-          setTimeout(() => {
-            isProcessing = false;
-          }, 500); // Adjust the delay as necessary
-        });
+      // Allow further clicks after a short delay
+      setTimeout(() => {
+        isProcessing = false;
+      }, 500); // Adjust the delay as necessary
+    });
 
         // Left arrow click
         leftDiv.addEventListener('click', (event) => {
-          event.preventDefault(); // Prevent default action (reload)
-          if (isProcessing) return; // Skip if already processing
-          isProcessing = true;
+      event.preventDefault(); // Prevent default action (reload)
+      event.stopImmediatePropagation(); // Stop event from propagating further
+      if (isProcessing) return; // Skip if already processing
+      isProcessing = true;
 
-          console.log("Left arrow clicked");
-          currentIndex = (currentIndex - 1 + models.length) % models.length; // Move to previous model
-          modelEntity.setAttribute('gltf-model', models[currentIndex]);
+      console.log("Left arrow clicked");
+      currentIndex = (currentIndex - 1 + models.length) % models.length; // Move to previous model
+      modelEntity.setAttribute('gltf-model', models[currentIndex]);
 
-          // Allow further clicks after a short delay
-          setTimeout(() => {
-            isProcessing = false;
-          }, 500); // Adjust the delay as necessary
-        });
-      } else {
-        console.error("Left or Right div element not found!");
-      }
+      // Allow further clicks after a short delay
+      setTimeout(() => {
+        isProcessing = false;
+      }, 500); // Adjust the delay as necessary
+    });
+  } else {
+    console.error("Left or Right div element not found!");
+  }
 
       // Example of removing event listeners before adding new ones
       function removePreviousListeners() {
@@ -351,16 +353,25 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
         console.error("Marker element not found!");
     }
 
-    // Prevent reload on window resize and orientation change
-    window.addEventListener('resize', (event) => {
-        event.preventDefault();
-        console.log("Preventing reload on resize");
-    });
+     // Prevent reload on window resize and orientation change
+  window.addEventListener('resize', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation(); // Prevent event from propagating further
+      console.log("Preventing reload on resize");
+  });
 
-    window.addEventListener('orientationchange', (event) => {
-        event.preventDefault();
-        console.log("Preventing reload on orientation change");
-    });
+  window.addEventListener('orientationchange', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation(); // Prevent event from propagating further
+      console.log("Preventing reload on orientation change");
+  });
+
+  // Prevent the page from reloading when the user clicks anywhere on the document
+  document.body.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    console.log("Click event intercepted to prevent reload");
+  });
 
 </script>
 </body>
