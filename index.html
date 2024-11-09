@@ -175,11 +175,41 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
   }
 }
 
+.right {
+  display: flex;
+  position: fixed;
+  height: 91.8%;
+  width: 50%;
+  background-color:transparent;
+  z-index: 1;
+  right:0;
+  top:0;
+
+}
+
+.left{
+  display: flex;
+  position: fixed;
+  height: 91.8%;
+  width: 50%;
+  background-color: transparent;
+  z-index: 1;
+  left:0;
+  top:0;
+
+}
 
 
     </style>
 </head>
 <body>
+
+  <div class="right">
+
+  </div>
+  <div class="left">
+
+  </div>
   <a class="animated-button1">
     <span></span>
     <span></span>
@@ -198,7 +228,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
     <a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam;  maxDetectionRate: 300; disableDefaultUI: true; trackingMethod: best; smooth: true; smoothCount: 45; smoothTolerance: 0.10; smoothThreshold: 20;" antialias="true">
       <a-light type="ambient" intensity="1" color="#ffffff"></a-light>
       <a-light type="directional" intensity="1" color="#ffffff" position="1 1 1"></a-light>      
-        <a-marker type='pattern' url='https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/pattern-AR%20MARKER.patt?v=1730360025912' size="3" patternRatio="0.5">
+        <a-marker id="model" type='pattern' url='https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/pattern-AR%20MARKER.patt?v=1730360025912' size="3" patternRatio="0.5">
         <a-entity
                 id="model"
                 position="0 -7 -2"
@@ -213,76 +243,85 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
 
     <script>
 
-      alert("Welcome to Augmented Reality®--Please allow app to access your camera for accurate rendering.");
+      // alert("Welcome to Augmented Reality®--Please allow app to access your camera for accurate rendering.");
 
       let initialized = false;
+    const models = [
+        "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
+        "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupwhite.glb?v=1730250247042",
+        "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblue.glb?v=1730249574324"
+    ];
 
+    let currentModelIndex = 0;
 
-const models = [
-    "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblack.glb?v=1730249950221",
-    "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupwhite.glb?v=1730250247042",
-    "https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/3D_Hoodie_Mockupblue.glb?v=1730249574324"
-];
-
-let currentModelIndex = 0;
-
-function swapModel() {
-    currentModelIndex = (currentModelIndex + 1) % models.length;
+function swapModel(direction) {
+    // Cycle through models based on direction
+    if (direction === 'right') {
+        currentModelIndex = (currentModelIndex + 1) % models.length;
+    } else if (direction === 'left') {
+        currentModelIndex = (currentModelIndex - 1 + models.length) % models.length;
+    }
     model.setAttribute('gltf-model', models[currentModelIndex]);
+    console.log(`Model changed to index: ${currentModelIndex}, URL: ${models[currentModelIndex]}`);
 }
 
-// Swap model on click
-model.addEventListener('click', swapModel);
+const rightDiv = document.querySelector('.right');
+const leftDiv = document.querySelector('.left');
+const model = document.getElementById('model');
 
-// Marker event listeners
+// Check if elements exist before adding event listeners
+if (rightDiv && leftDiv && model) {
+    rightDiv.addEventListener('click', () => {
+        console.log("Right div clicked");
+        swapModel('right');
+    });
 
-marker.addEventListener('markerFound', () => {
-    if (!initialized) {
-        console.log("Marker found, initializing AR content.");
-        initialized = true;
-    }
-});
+    leftDiv.addEventListener('click', () => {
+        console.log("Left div clicked");
+        swapModel('left');
+    });
+} else {
+    console.error("Right, Left divs or model element not found!");
+}
 
-marker.addEventListener('markerLost', () => {
-    console.log("Marker lost, keeping AR content intact.");
-});
 
-window.addEventListener('resize', (event) => {
-    event.preventDefault();
-    console.log("Preventing reload on resize");
-});
-
-window.addEventListener('orientationchange', (event) => {
-    event.preventDefault();
-    console.log("Preventing reload on orientation change");
-});
+    // Marker event listeners
+    const marker = document.querySelector("a-marker");
     
-
-        var marker = document.getElementById('marker');
-        var model = document.getElementById('model');
-
+    if (marker) {
         marker.addEventListener('markerFound', () => {
+            if (!initialized) {
+                console.log("Marker found, initializing AR content.");
+                initialized = true;
+            }
             model.setAttribute('position', '0 -7 -2');
             model.setAttribute('scale', '0.10 0.10 0.10');
         });
 
         marker.addEventListener('markerLost', () => {
+            console.log("Marker lost, keeping AR content intact.");
             model.setAttribute('position', '0 -20 -4');
         });
 
         marker.addEventListener('transformUpdated', (e) => {
             const distance = Math.abs(e.detail.matrix.elements[14]);
-
-            let scaleFactor;
-            if (distance > 1) {
-                scaleFactor = 0.10 + (distance / 20);
-            } else {
-                scaleFactor = 0.10;
-            }
-            
+            let scaleFactor = distance > 1 ? 0.10 + (distance / 20) : 0.10;
             model.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
         });
+    } else {
+        console.error("Marker element not found!");
+    }
 
-    </script>
+    // Prevent reload on window resize and orientation change
+    window.addEventListener('resize', (event) => {
+        event.preventDefault();
+        console.log("Preventing reload on resize");
+    });
+
+    window.addEventListener('orientationchange', (event) => {
+        event.preventDefault();
+        console.log("Preventing reload on orientation change");
+    });
+</script>
 </body>
 </html>
