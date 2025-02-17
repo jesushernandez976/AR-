@@ -17,16 +17,22 @@
         }
 
         p {
-    position: fixed;
+    position: absolute;
+    bottom: 0;
     left: 50%;
-    bottom: 0px;
     transform: translateX(-50%);
-    z-index: 9999;
+    width: 100%;
+    max-width: 90%; /* Prevents overflow */
+    text-align: center;
     color: white;
-    font-size: 5px;
+    font-size: 10px;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-wrap: break-word;
 }
-
-.shiny-image {
+/* .shiny-image {
     display: flex;
     width: 120px;
     position: fixed;
@@ -173,31 +179,7 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
   }
-}
-
-.right {
-  display: flex;
-  position: fixed;
-  height: 91.8%;
-  width: 50%;
-  background-color:transparent;
-  z-index: 10;
-  right:0;
-  top:0;
-
-}
-
-.left{
-  display: flex;
-  position: fixed;
-  height: 91.8%;
-  width: 50%;
-  background-color: transparent;
-  z-index: 10;
-  left:0;
-  top:0;
-
-}
+} */
 
 
     </style>
@@ -218,24 +200,26 @@ background: linear-gradient(to bottom, rgba(43, 8, 8, 0.2), rgba(38, 154, 217, 0
   </a>
     <div class="logo-container">
     <a href="https://accesscodepro.com/" class="logo">
-        <img src="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/Access%20%20AR%20LOGO%2002-05.png?v=1730420098269" alt="Access code logo" class="shiny-image">
+        <!-- <img src="https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/Access%20%20AR%20LOGO%2002-05.png?v=1730420098269" alt="Access code logo" class="shiny-image"> -->
     </a>
 </div>
     </div>
-    <p class="tag"><br/>
-      © 2025 [ACP]  All Rights Reserved.</p>
+    <p class="tag">Access Code Programming, LLC [Version 1.0.3] <br>
+      © 2025 [ACP] All Rights Reserved.</p>
 
     <a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam;  maxDetectionRate: 300; disableDefaultUI: true; trackingMethod: best; smooth: true; smoothCount: 45; smoothTolerance: 0.10; smoothThreshold: 20;" debug="false" antialias="true">
       <a-light type="ambient" intensity="1" color="#ffffff"></a-light>
       <a-light type="directional" intensity="1" color="#ffffff" position="1 1 1"></a-light>      
         <a-marker type='pattern' url='https://cdn.glitch.global/11f87b4d-87c2-4a8d-b332-ffb5f42efbcd/pattern-AR%20MARKER.patt?v=1730360025912' size="5" patternRatio="0.10">
         <a-entity
-                id="model"
+                id="model"  
+                rotation="-90 0 0"
                 position="0 2 0"
                 scale="12 12 12"
                 gltf-model="https://cdn.glitch.global/7b56511a-abc3-4495-90ba-3783f9d085ca/logo%202.glb?v=1731309213836"
                 material="shader: flat; opacity: 1;"
-                animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear">
+                animation="property: rotation; to: -90 -0 0; dur: 10000; loop: true; easing: linear"
+                >
             </a-entity>
           </a-marker>       
            <a-entity camera></a-entity>
